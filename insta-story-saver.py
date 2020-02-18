@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 import os
 import time
 from urllib.parse import urlparse
@@ -7,6 +8,9 @@ from urllib.request import urlretrieve
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from instagram_private_api import Client
+
+logging.basicConfig(level=logging.DEBUG)
+logging.debug("Script triggered at : " + str(datetime.datetime.now()))
 
 user_name = os.environ['USERNAME']
 password = os.environ['PASSWORD']
@@ -54,7 +58,7 @@ class StorySaver:
                     video_filename = video_folder + urlparse(video_url).path.split("/")[-1]
                     urlretrieve(video_url, video_filename)
 
-                print(img_url)
+                logging.debug(img_url)
 
     def downloadPictures(self):
         users = self.getMyFollowingList()
@@ -68,7 +72,7 @@ story_saver = StorySaver(user_name, password, result_path + "stories.json")
 
 @sched.scheduled_job('cron', hour=24)
 def scheduleJob(self):
-    print("Running at : " + str(datetime.datetime.now()))
+    logging.debug("Running at : " + str(datetime.datetime.now()))
     # self.downloadPictures()
 
 
