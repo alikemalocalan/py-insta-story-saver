@@ -1,1 +1,1 @@
-clock: python insta-story-saver
+clock: python insta-story-saver.py
